@@ -13,12 +13,8 @@ public class BuiltinFunctions {
 	public static final BuiltinFunction CLOCK_MILLISECONDS = register(new ClockMilliSeconds());
 	public static final BuiltinFunction CLOCK_SECONDS = register(new ClockSeconds());
 	public static final BuiltinFunction PARSE_NUMBER = register(new ParseNumber());
-	public static final BuiltinFunction BITWISE_AND = register(new BitwiseAnd());
-	public static final BuiltinFunction BITWISE_XOR = register(new BitwiseOr());
-	public static final BuiltinFunction BITWISE_OR = register(new BitwiseXor());
 	public static final BuiltinFunction RAND_INT = register(new RandInt());
 	public static final BuiltinFunction FORMAT = register(new Format());
-	public static final BuiltinFunction MODULO = register(new Modulo());
 	public static final BuiltinFunction INPUT = register(new Input());
 	public static final BuiltinFunction ROUND = register(new Round());
 	public static final BuiltinFunction EXIT = register(new Exit());

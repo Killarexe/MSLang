@@ -278,7 +278,7 @@ public class Parser {
 	
 	private Expression term() {
 		Expression expression = factor();
-		while(match(TokenType.PLUS, TokenType.MINUS)) {
+		while(match(TokenType.PLUS, TokenType.MINUS, TokenType.MODULO, TokenType.BIN_AND, TokenType.BIN_OR, TokenType.BIN_XOR)) {
 			Token operator = previous();
 			Expression right = factor();
 			expression = new BinaryExpression(expression, operator, right);
@@ -297,7 +297,7 @@ public class Parser {
 	}
 	
 	private Expression unary() {
-		if(match(TokenType.NOT, TokenType.MINUS)) {
+		if(match(TokenType.NOT, TokenType.MINUS, TokenType.DECREASE, TokenType.INCREASE)) {
 			Token operator = previous();
 			Expression right = unary();
 			return new UnaryExpression(operator, right);

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import github.killarexe.multi_sign.core.Environement;
+import github.killarexe.multi_sign.core.error.ErrorHandler;
 import github.killarexe.multi_sign.core.error.RuntimeError;
 import github.killarexe.multi_sign.core.expressions.*;
 import github.killarexe.multi_sign.core.functions.MSCallable;
@@ -26,8 +27,13 @@ public class Interpreter implements ExpressionVisitor<Object>, StatementVisitor<
 	}
 	
 	public void interpret(List<Statement> statements) {
-		for(Statement statement: statements) {
-			statement.accept(this);
+		try {
+			for(Statement statement: statements) {
+				statement.accept(this);
+			}
+		}catch (RuntimeError e) {
+			ErrorHandler.error(e);
+			System.exit(64);
 		}
 	}
 
@@ -49,6 +55,9 @@ public class Interpreter implements ExpressionVisitor<Object>, StatementVisitor<
 					return left;
 				}
 				return (double)left / (double)right;
+			case MODULO:
+				checkNumberOperands(expression.getOperator(), left, right);
+				return (double)left % (double)right;
 			case STAR:
 				checkNumberOperands(expression.getOperator(), left, right);
 				return (double)left * (double)right;
@@ -111,6 +120,10 @@ public class Interpreter implements ExpressionVisitor<Object>, StatementVisitor<
 				return !isTruthy(right);
 			case MINUS:
 				return -(double)right;
+			case INCREASE:
+				return (double)(right) + 1;
+			case DECREASE:
+				return (double)(right) - 1;
 			default:
 				break;
 		}

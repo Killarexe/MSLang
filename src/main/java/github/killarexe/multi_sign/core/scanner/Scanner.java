@@ -69,6 +69,7 @@ public class Scanner {
 	      		break;
 	      	case ';': addToken(TokenType.SEMICOLON); break;
 	      	case '*': addToken(TokenType.STAR); break;
+	      	case '%': addToken(TokenType.MODULO); break;
 	      	case '^':
 	      		addToken(match('^') ? TokenType.XOR : match('=') ? TokenType.XOR_EQUAL : TokenType.BIN_XOR);
 	      		break;
