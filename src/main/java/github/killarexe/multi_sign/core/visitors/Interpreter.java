@@ -121,8 +121,14 @@ public class Interpreter implements ExpressionVisitor<Object>, StatementVisitor<
 			case MINUS:
 				return -(double)right;
 			case INCREASE:
+				if(expression.getRight() instanceof VariableExpression variable) {
+					environement.assign(variable.getName(), (double)(right) + 1);
+				}
 				return (double)(right) + 1;
 			case DECREASE:
+				if(expression.getRight() instanceof VariableExpression variable) {
+					environement.assign(variable.getName(), (double)(right) - 1);
+				}
 				return (double)(right) - 1;
 			default:
 				break;
