@@ -43,7 +43,7 @@ public class Parser {
 			if(previous().getType() == TokenType.SEMICOLON) return;
 			switch(peek().getType()) {
 		        case CLASS:
-		        case FUN:
+		        case FN:
 		        case VAR:
 		        case FOR:
 		        case IF:
@@ -121,7 +121,7 @@ public class Parser {
 				}
 				consume(TokenType.SEMICOLON, "Expected ';' at the end of the define declaration...");
 			}
-			if(match(TokenType.FUN)) {
+			if(match(TokenType.FN)) {
 				return function("function");
 			}
 			if(match(TokenType.VAR)) {
