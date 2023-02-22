@@ -55,6 +55,7 @@ public class Token {
 		  // Keywords.
 		  AND, CLASS, ELSE, FALSE, FN, FOR, IF, NULL, OR,
 		  PRINT, RETURN, SUPER, THIS, TRUE, VAR, WHILE, DEFINE,
+		  INCLUDE,
 
 		  EOF
 	}

@@ -1,4 +1,4 @@
-plugins {.
+plugins {
     id 'java'
 }
 
@@ -72,4 +72,7 @@ dependencies {
 
 jar{
     baseName 'mutlisign'
+    manifest{
+      attributes 'Main-Class': 'github.killarexe.multi_sign.Launch'
+    }
 }

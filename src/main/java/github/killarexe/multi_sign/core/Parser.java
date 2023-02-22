@@ -22,6 +22,7 @@ import github.killarexe.multi_sign.core.statements.BlockStatement;
 import github.killarexe.multi_sign.core.statements.ExpressionStatement;
 import github.killarexe.multi_sign.core.statements.FunctionStatement;
 import github.killarexe.multi_sign.core.statements.IfStatement;
+import github.killarexe.multi_sign.core.statements.IncludeStatement;
 import github.killarexe.multi_sign.core.statements.PrintStatement;
 import github.killarexe.multi_sign.core.statements.ReturnStatement;
 import github.killarexe.multi_sign.core.statements.Statement;
@@ -50,6 +51,8 @@ public class Parser {
 		        case WHILE:
 		        case PRINT:
 		        case RETURN:
+		        case DEFINE:
+		        case INCLUDE:
 		        	return;
 		        default:
 		        	break;
@@ -120,6 +123,11 @@ public class Parser {
 					}
 				}
 				consume(TokenType.SEMICOLON, "Expected ';' at the end of the define declaration...");
+			}
+			if(match(TokenType.INCLUDE)) {
+				Statement statement = new IncludeStatement(primary());
+				consume(TokenType.SEMICOLON, "Expected ';' at the end of include...");
+				return statement;
 			}
 			if(match(TokenType.FN)) {
 				return function("function");
@@ -278,7 +286,7 @@ public class Parser {
 	
 	private Expression term() {
 		Expression expression = factor();
-		while(match(TokenType.PLUS, TokenType.MINUS, TokenType.MODULO, TokenType.BIN_AND, TokenType.BIN_OR, TokenType.BIN_XOR)) {
+		while(match(TokenType.PLUS, TokenType.MINUS)) {
 			Token operator = previous();
 			Expression right = factor();
 			expression = new BinaryExpression(expression, operator, right);
@@ -288,7 +296,8 @@ public class Parser {
 	
 	private Expression factor() {
 		Expression expression = unary();
-		while(match(TokenType.SLASH, TokenType.STAR)) {
+		while(match(TokenType.SLASH, TokenType.STAR, TokenType.MODULO, TokenType.BIN_AND,
+				TokenType.BIN_OR,TokenType.BIN_XOR, TokenType.LEFT_SHIFT, TokenType.RIGHT_SHIFT)) {
 			Token operator = previous();
 			Expression right = unary();
 			expression = new BinaryExpression(expression, operator, right);

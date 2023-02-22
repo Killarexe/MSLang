@@ -33,6 +33,7 @@ public class Scanner {
 		 keywords.put("var",    TokenType.VAR);
 		 keywords.put("while",  TokenType.WHILE);
 		 keywords.put("define", TokenType.DEFINE);
+		 keywords.put("include", TokenType.INCLUDE);
 	 }
 	
 	public Scanner(String source) {

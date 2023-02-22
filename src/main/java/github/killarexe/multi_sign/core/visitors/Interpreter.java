@@ -1,8 +1,13 @@
 package github.killarexe.multi_sign.core.visitors;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import github.killarexe.multi_sign.Launch;
 import github.killarexe.multi_sign.core.Environement;
 import github.killarexe.multi_sign.core.error.ErrorHandler;
 import github.killarexe.multi_sign.core.error.RuntimeError;
@@ -75,13 +80,19 @@ public class Interpreter implements ExpressionVisitor<Object>, StatementVisitor<
 				return (double)left <= (double)right;
 			case BIN_AND:
 				checkNumberOperands(expression.getOperator(), left, right);
-				return (int)left & (int)right;
+				return (double)((int)(double)left & (int)(double)right);
 			case BIN_OR:
 				checkNumberOperands(expression.getOperator(), left, right);
-				return (int)left | (int)right;
+				return (double)((int)(double)left | (int)(double)right);
 			case BIN_XOR:
 				checkNumberOperands(expression.getOperator(), left, right);
-				return (int)left ^ (int)right;
+				return (double)((int)(double)left ^ (int)(double)right);
+			case LEFT_SHIFT:
+				checkNumberOperands(expression.getOperator(), left, right);
+				return (double)((int)(double)left << (int)(double)right);
+			case RIGHT_SHIFT:
+				checkNumberOperands(expression.getOperator(), left, right);
+				return (double)((int)(double)left >> (int)(double)right);
 			case PLUS:
 				if(left instanceof Double && right instanceof Double) {
 					return (double)left + (double)right;
@@ -204,7 +215,7 @@ public class Interpreter implements ExpressionVisitor<Object>, StatementVisitor<
 		return value;
 	}
 	
-	private String stringify(Object value) {
+	public String stringify(Object value) {
 		if (value == null) return "null";
 		
 		if (value instanceof Double) {
@@ -214,11 +225,14 @@ public class Interpreter implements ExpressionVisitor<Object>, StatementVisitor<
 			}
 			return text;
 		}
+		if(value instanceof String string) {
+			string.replaceAll("\\n", "\n");
+		}
 		
 		return value.toString();
 	}
 	
-	private void checkNumberOperands(Token operator, Object left, Object right) throws RuntimeError{
+	public void checkNumberOperands(Token operator, Object left, Object right) throws RuntimeError{
 		if (left instanceof Double && right instanceof Double) {
 			return;
 		}
@@ -232,7 +246,7 @@ public class Interpreter implements ExpressionVisitor<Object>, StatementVisitor<
 		throw new RuntimeError(operator, "Operand must be a number.");
 	}
 	
-	private boolean isEqual(Object a, Object b) {
+	public boolean isEqual(Object a, Object b) {
 		if(a == null && b == null) {
 			return true;
 		}
@@ -242,7 +256,7 @@ public class Interpreter implements ExpressionVisitor<Object>, StatementVisitor<
 		return a.equals(b);
 	}
 	
-	private boolean isTruthy(Object object) {
+	public boolean isTruthy(Object object) {
 		if(object == null) {
 			return false;
 		}
@@ -320,6 +334,18 @@ public class Interpreter implements ExpressionVisitor<Object>, StatementVisitor<
 	public Void visitWhileStatement(WhileStatement statement) {
 		while(isTruthy(evaluate(statement.getCondition()))) {
 			statement.getBody().accept(this);
+		}
+		return null;
+	}
+	
+	@Override
+	public Void visitIncludeStatement(IncludeStatement statement) {
+		String fileName = stringify(evaluate(statement.getFile()));
+		try {
+			byte[] source = Files.readAllBytes(Paths.get(fileName));
+			Launch.execute(new String(source, Charset.defaultCharset()));
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		return null;
 	}

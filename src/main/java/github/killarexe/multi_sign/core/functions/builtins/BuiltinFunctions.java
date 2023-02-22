@@ -10,9 +10,24 @@ public class BuiltinFunctions {
 	
 	private static final List<BuiltinFunction> FUNCTIONS = new ArrayList<>();
 	
+	public static final BuiltinFunction WINDOW_SHOULD_CLOSE = register(new WindowShouldClose());
 	public static final BuiltinFunction CLOCK_MILLISECONDS = register(new ClockMilliSeconds());
+	public static final BuiltinFunction WINDOW_BACKGROUND = register(new WindowBackground());
+	public static final BuiltinFunction DRAW_RECTANGLE = register(new DrawRecangle());
+	public static final BuiltinFunction IS_KEY_PRESSED = register(new IsKeyPressed());
+	public static final BuiltinFunction WINDOW_UPDATE = register(new WindowUpdate());
+	public static final BuiltinFunction CREATE_WINDOW = register(new CreateWindow());
 	public static final BuiltinFunction CLOCK_SECONDS = register(new ClockSeconds());
+	public static final BuiltinFunction WINDOW_DELTA = register(new WindowDelta());
 	public static final BuiltinFunction PARSE_NUMBER = register(new ParseNumber());
+	public static final BuiltinFunction WINDOW_SWAP = register(new WindowSwap());
+	public static final BuiltinFunction WINDOW_STOP = register(new WindowStop());
+	public static final BuiltinFunction FILE_EXISTS = register(new FileExists());
+	public static final BuiltinFunction CREATE_FILE = register(new CreateFile());
+	public static final BuiltinFunction WRITE_FILE = register(new WriteFile());
+	public static final BuiltinFunction CREATE_DIR = register(new CreateDir());
+	public static final BuiltinFunction OPEN_FILE = register(new OpenFile());
+	public static final BuiltinFunction READ_FILE = register(new ReadFile());
 	public static final BuiltinFunction RAND_INT = register(new RandInt());
 	public static final BuiltinFunction FORMAT = register(new Format());
 	public static final BuiltinFunction INPUT = register(new Input());

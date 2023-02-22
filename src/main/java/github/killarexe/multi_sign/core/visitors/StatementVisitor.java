@@ -12,4 +12,5 @@ public interface StatementVisitor<R> {
     R visitReturnStatement(ReturnStatement statement);
     R visitVariableStatement(VariableStatement statement);
     R visitWhileStatement(WhileStatement statement);
+    R visitIncludeStatement(IncludeStatement statement);
 }

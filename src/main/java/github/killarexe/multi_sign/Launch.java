@@ -44,7 +44,7 @@ public class Launch {
 		}
 	}
 	
-	private static void execute(String code) {
+	public static void execute(String code) {
 		Scanner scanner = new Scanner(code);
 		Parser parser = new Parser(scanner.scanTokens());
 		List<Statement> statements = parser.parse();
