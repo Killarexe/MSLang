@@ -63,14 +63,14 @@ public class Scanner {
 	      	case ',': addToken(TokenType.COMMA); break;
 	      	case '.': addToken(TokenType.DOT); break;
 	      	case '-': 
-	      		addToken(match('-') ? TokenType.DECREASE : TokenType.MINUS);
+	      		addToken(match('-') ? TokenType.DECREASE : match('=') ? TokenType.MINUS_EQUAL : TokenType.MINUS);
 	      		break;
 	      	case '+':
-	      		addToken(match('+') ? TokenType.INCREASE : TokenType.PLUS);
+	      		addToken(match('+') ? TokenType.INCREASE : match('=') ? TokenType.PLUS_EQUAL : TokenType.PLUS);
 	      		break;
 	      	case ';': addToken(TokenType.SEMICOLON); break;
-	      	case '*': addToken(TokenType.STAR); break;
-	      	case '%': addToken(TokenType.MODULO); break;
+	      	case '*': addToken(match('=') ? TokenType.STAR_EQUAL : TokenType.STAR); break;
+	      	case '%': addToken(match('=') ? TokenType.MODULO_EQUAL : TokenType.MODULO); break;
 	      	case '^':
 	      		addToken(match('^') ? TokenType.XOR : match('=') ? TokenType.XOR_EQUAL : TokenType.BIN_XOR);
 	      		break;
@@ -113,7 +113,7 @@ public class Scanner {
 	      			identifier();
 	      			break;
 	      		}
-	      		ErrorHandler.error(line, "Unexpected character!");
+	      		ErrorHandler.error(line, "Unexpected character '" + c +"'!");
 	      		break;
 	    }
 	}
@@ -124,14 +124,16 @@ public class Scanner {
   				advence();
   			}
   		}else if(match('*')){
-  			while(peek() != '*' && peekNext() != '/') {
+  			while(peek() != '*' || peekNext() != '/') {
   				if(peek() == '\n') {
   					line++;
   				}
   				advence();
   			}
-  		}else {
-  			addToken(TokenType.SLASH);
+  			advence();
+  			advence();
+  		}else{
+  			addToken(match('=') ? TokenType.SLASH_EQUAL : TokenType.SLASH);
   		}
 	}
 	

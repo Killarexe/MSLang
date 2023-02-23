@@ -128,6 +128,9 @@ public class Interpreter implements ExpressionVisitor<Object>, StatementVisitor<
 		Object right = evaluate(expression.getRight());
 		switch(expression.getOperator().getType()) {
 			case NOT:
+				if(right instanceof Double number) {
+					return (double)((int)(double)number ^ Integer.MAX_VALUE);
+				}
 				return !isTruthy(right);
 			case MINUS:
 				return -(double)right;
@@ -152,7 +155,7 @@ public class Interpreter implements ExpressionVisitor<Object>, StatementVisitor<
 	}
 
 	@Override
-	public Object visitCallExpression(CallExpression expression) {
+	public Object visitCallExpression(CallExpression expression) throws RuntimeError{
 		Object call = evaluate(expression.getCall());
 		List<Object> args = new ArrayList<>();
 		for(Expression arg: expression.getArgs()) {
@@ -211,6 +214,29 @@ public class Interpreter implements ExpressionVisitor<Object>, StatementVisitor<
 	@Override
 	public Object visitAssignExpression(AssignExpression expression) {
 		Object value = evaluate(expression.getValue());
+		//TODO: Other operations
+		switch(expression.getOperator().getType()) {
+			case ASSIGN:
+				break;
+			case PLUS_EQUAL:
+				checkNumberOperands(expression.getOperator(), environement.get(expression.getName()), value);
+				value = (double)environement.get(expression.getName()) + (double)value;
+				break;
+			case MINUS_EQUAL:
+				checkNumberOperands(expression.getOperator(), environement.get(expression.getName()), value);
+				value = (double)environement.get(expression.getName()) - (double)value;
+				break;
+			case STAR_EQUAL:
+				checkNumberOperands(expression.getOperator(), environement.get(expression.getName()), value);
+				value = (double)environement.get(expression.getName()) * (double)value;
+				break;
+			case SLASH_EQUAL:
+				checkNumberOperands(expression.getOperator(), environement.get(expression.getName()), value);
+				value = (double)environement.get(expression.getName()) / (double)value;
+				break;
+			default:
+				break;
+		}
 		environement.assign(expression.getName(), value);
 		return value;
 	}
@@ -218,15 +244,16 @@ public class Interpreter implements ExpressionVisitor<Object>, StatementVisitor<
 	public String stringify(Object value) {
 		if (value == null) return "null";
 		
-		if (value instanceof Double) {
-			String text = value.toString();
+		if (value instanceof Double number) {
+			String text = number.toString();
 			if (text.endsWith(".0")) {
-				text = text.substring(0, text.length() - 2);
+				text = text.replace(".0", "");
 			}
 			return text;
 		}
 		if(value instanceof String string) {
-			string.replaceAll("\\n", "\n");
+			string = string.replace("\\n", "\n");
+			return string;
 		}
 		
 		return value.toString();

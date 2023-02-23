@@ -72,13 +72,14 @@ public class Parser {
 	private Expression assignement() throws RuntimeError{
 		Expression expression = or();
 		
-		if(match(TokenType.ASSIGN)) {
+		if(match(TokenType.ASSIGN, TokenType.PLUS_EQUAL, TokenType.MINUS_EQUAL, TokenType.STAR_EQUAL,
+				TokenType.SLASH_EQUAL, TokenType.AND_EQUAL, TokenType.OR_EQUAL, TokenType.XOR_EQUAL, TokenType.MODULO_EQUAL)) {
 			Token equal = previous();
 			Expression value = assignement();
 			
 			if(expression instanceof VariableExpression) {
 				Token name = ((VariableExpression)expression).getName();
-				return new AssignExpression(name, value);
+				return new AssignExpression(name, equal, value);
 			}
 			throw error(equal, "Invalid assignement...");
 		}
