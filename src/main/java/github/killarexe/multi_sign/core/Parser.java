@@ -16,6 +16,7 @@ import github.killarexe.multi_sign.core.expressions.LiteralExpression;
 import github.killarexe.multi_sign.core.expressions.LogicalExpression;
 import github.killarexe.multi_sign.core.expressions.UnaryExpression;
 import github.killarexe.multi_sign.core.expressions.VariableExpression;
+import github.killarexe.multi_sign.core.scanner.Scanner;
 import github.killarexe.multi_sign.core.scanner.Token;
 import github.killarexe.multi_sign.core.scanner.Token.TokenType;
 import github.killarexe.multi_sign.core.statements.BlockStatement;
@@ -124,6 +125,7 @@ public class Parser {
 					}
 				}
 				consume(TokenType.SEMICOLON, "Expected ';' at the end of the define declaration...");
+				Scanner.keywords.put(key, type.getType());
 			}
 			if(match(TokenType.INCLUDE)) {
 				Statement statement = new IncludeStatement(primary());

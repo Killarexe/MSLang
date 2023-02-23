@@ -1,5 +1,7 @@
 var PI = 3.141592653589793;
 
+define void fn;
+
 fn pow(a, b){
 	var result = a;
 	for(var i = 1; i < b; ++i){
