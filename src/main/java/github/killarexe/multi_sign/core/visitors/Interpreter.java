@@ -214,7 +214,6 @@ public class Interpreter implements ExpressionVisitor<Object>, StatementVisitor<
 	@Override
 	public Object visitAssignExpression(AssignExpression expression) {
 		Object value = evaluate(expression.getValue());
-		//TODO: Other operations
 		switch(expression.getOperator().getType()) {
 			case ASSIGN:
 				break;
@@ -233,6 +232,22 @@ public class Interpreter implements ExpressionVisitor<Object>, StatementVisitor<
 			case SLASH_EQUAL:
 				checkNumberOperands(expression.getOperator(), environement.get(expression.getName()), value);
 				value = (double)environement.get(expression.getName()) / (double)value;
+				break;
+			case AND_EQUAL:
+				checkNumberOperands(expression.getOperator(), environement.get(expression.getName()), value);
+				value = (double)((int)(double)environement.get(expression.getName()) & (int)(double)value);
+				break;
+			case OR_EQUAL:
+				checkNumberOperands(expression.getOperator(), environement.get(expression.getName()), value);
+				value = (double)((int)(double)environement.get(expression.getName()) | (int)(double)value);
+				break;
+			case XOR_EQUAL:
+				checkNumberOperands(expression.getOperator(), environement.get(expression.getName()), value);
+				value = (double)((int)(double)environement.get(expression.getName()) ^ (int)(double)value);
+				break;
+			case MODULO_EQUAL:
+				checkNumberOperands(expression.getOperator(), environement.get(expression.getName()), value);
+				value = (double)((int)(double)environement.get(expression.getName()) % (int)(double)value);
 				break;
 			default:
 				break;
