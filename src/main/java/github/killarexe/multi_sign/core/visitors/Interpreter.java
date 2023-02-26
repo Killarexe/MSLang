@@ -97,7 +97,7 @@ public class Interpreter implements ExpressionVisitor<Object>, StatementVisitor<
 				if(left instanceof Double && right instanceof Double) {
 					return (double)left + (double)right;
 				}
-				if(left instanceof String && right instanceof String) {
+				if(left instanceof String && right instanceof CharSequence) {
 					return (String)left + (String)right;
 				}
 				if(left instanceof Double && right instanceof String) {
@@ -218,6 +218,14 @@ public class Interpreter implements ExpressionVisitor<Object>, StatementVisitor<
 			case ASSIGN:
 				break;
 			case PLUS_EQUAL:
+				if(environement.get(expression.getName()) instanceof String a && value instanceof CharSequence b){
+					value = a + b;
+					break;
+				}
+				if(environement.get(expression.getName()) instanceof String a && value instanceof Double b){
+					value = a + b;
+					break;
+				}
 				checkNumberOperands(expression.getOperator(), environement.get(expression.getName()), value);
 				value = (double)environement.get(expression.getName()) + (double)value;
 				break;

@@ -24,12 +24,15 @@ public class BuiltinFunctions {
 	public static final BuiltinFunction WINDOW_STOP = register(new WindowStop());
 	public static final BuiltinFunction FILE_EXISTS = register(new FileExists());
 	public static final BuiltinFunction CREATE_FILE = register(new CreateFile());
+	public static final BuiltinFunction GET_CHAR_AT = register(new GetCharAt());
 	public static final BuiltinFunction WRITE_FILE = register(new WriteFile());
 	public static final BuiltinFunction CREATE_DIR = register(new CreateDir());
 	public static final BuiltinFunction OPEN_FILE = register(new OpenFile());
 	public static final BuiltinFunction READ_FILE = register(new ReadFile());
 	public static final BuiltinFunction RAND_INT = register(new RandInt());
+	public static final BuiltinFunction TO_CHAR = register(new ToChar());
 	public static final BuiltinFunction FORMAT = register(new Format());
+	public static final BuiltinFunction LEN_OF = register(new LenOf());
 	public static final BuiltinFunction INPUT = register(new Input());
 	public static final BuiltinFunction ROUND = register(new Round());
 	public static final BuiltinFunction EXIT = register(new Exit());

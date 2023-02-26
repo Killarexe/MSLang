@@ -74,7 +74,8 @@ public class Window {
         if(window == 0){
         	throw new IllegalStateException("Failed to create GLFW Window!");
         }
-
+        glfwMakeContextCurrent(window);
+        createCapabilities();
 
         GLFWVidMode vidMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
         windowPosX[0] = (vidMode.width() - width)/2;
@@ -85,14 +86,14 @@ public class Window {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        glfwMakeContextCurrent(window);
-        createCapabilities();
+        
+        glfwSwapInterval(1);
+        glfwShowWindow(window);
         createCallbacks();
-        glEnable(GL_DEPTH_TEST);
-        glEnable(GL_STENCIL_TEST);
+        //glEnable(GL_DEPTH_TEST);
+        //glEnable(GL_STENCIL_TEST);
         //glEnable(GL_CULL_FACE);
         //glCullFace(GL_BACK);
-        glfwShowWindow(window);
         String defaultDeviceName = alcGetString(0, ALC_DEFAULT_DEVICE_SPECIFIER);
         audioDevice = alcOpenDevice(defaultDeviceName);
         int[] attributes = {0};
@@ -103,7 +104,6 @@ public class Window {
         if(!alCapabilities.OpenAL10){
             System.err.println("Audio Lib Not Supported!");
         }
-        glfwSwapInterval(1);
     }
 
     private void createCallbacks(){
@@ -144,9 +144,9 @@ public class Window {
     }
 
     public void render(){
+    	glfwPollEvents();
         glClearColor(backgroundColor.x, backgroundColor.y, backgroundColor.z, 1);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glfwPollEvents();
+        glClear(GL_COLOR_BUFFER_BIT);
     }
 
     public void swapBuffers(){

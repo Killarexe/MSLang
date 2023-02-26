@@ -24,7 +24,7 @@ public class WriteFile extends BuiltinFunction{
 		}
 		if(file.exists() && Files.isWritable(file.toPath())) {
 			try {
-				Files.writeString(file.toPath(), args.get(1).toString(), StandardOpenOption.WRITE);
+				Files.writeString(file.toPath(), args.get(1).toString(), StandardOpenOption.valueOf(args.get(2).toString()));
 			} catch (IOException e) {
 				return null;
 			}
@@ -34,7 +34,7 @@ public class WriteFile extends BuiltinFunction{
 
 	@Override
 	public int argsSize() {
-		return 2;
+		return 3;
 	}
 
 }

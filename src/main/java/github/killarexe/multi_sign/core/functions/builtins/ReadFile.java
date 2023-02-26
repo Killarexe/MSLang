@@ -2,7 +2,6 @@ package github.killarexe.multi_sign.core.functions.builtins;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -26,7 +25,7 @@ public class ReadFile extends BuiltinFunction{
 		}
 		try {
 			byte[] source = Files.readAllBytes(Paths.get(args.get(0).toString()));
-			return new String(source, Charset.defaultCharset());
+			return new String(source);
 		} catch (IOException e) {
 			return null;
 		}

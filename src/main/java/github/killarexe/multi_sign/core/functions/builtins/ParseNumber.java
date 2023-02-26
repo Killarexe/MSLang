@@ -12,7 +12,14 @@ public class ParseNumber extends BuiltinFunction{
 
 	@Override
 	public Object call(Interpreter interpreter, List<Object> args) {
-		return Double.parseDouble((String)args.get(0));
+		Object object = args.get(0);
+		if(object instanceof String) {
+			return Double.parseDouble((String)args.get(0));
+		}
+		if(object instanceof Character ch) {
+			return (double)ch;
+		}
+		return 0;
 	}
 
 	@Override
