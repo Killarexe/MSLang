@@ -13,6 +13,7 @@ public class BuiltinFunctions {
 	public static final BuiltinFunction WINDOW_SHOULD_CLOSE = register(new WindowShouldClose());
 	public static final BuiltinFunction CLOCK_MILLISECONDS = register(new ClockMilliSeconds());
 	public static final BuiltinFunction WINDOW_BACKGROUND = register(new WindowBackground());
+	public static final BuiltinFunction REPLACE_STRING = register(new ReplaceString());
 	public static final BuiltinFunction DRAW_RECTANGLE = register(new DrawRecangle());
 	public static final BuiltinFunction IS_KEY_PRESSED = register(new IsKeyPressed());
 	public static final BuiltinFunction WINDOW_UPDATE = register(new WindowUpdate());
@@ -37,6 +38,7 @@ public class BuiltinFunctions {
 	public static final BuiltinFunction ROUND = register(new Round());
 	public static final BuiltinFunction EXIT = register(new Exit());
 	public static final BuiltinFunction WAIT = register(new Wait());
+	public static final BuiltinFunction RAND = register(new Rand());
 	
 	public static BuiltinFunction register(BuiltinFunction builtinFunction) {
 		FUNCTIONS.add(builtinFunction);
