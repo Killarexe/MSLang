@@ -8,11 +8,7 @@ public interface ExpressionVisitor<R> {
 	R visitLiteralExpression(LiteralExpression expression);
 	R visitUnaryExpression(UnaryExpression expression);
     R visitCallExpression(CallExpression expression);
-    R visitGetExpression(GetExpression expression);
     R visitLogicalExpression(LogicalExpression expression);
-    R visitSetExpression(SetExpression expression);
-    R visitSuperExpression(SuperExpression expression);
-    R visitThisExpression(ThisExpression expression);
     R visitVariableExpression(VariableExpression expression);
     R visitAssignExpression(AssignExpression expression);
 }

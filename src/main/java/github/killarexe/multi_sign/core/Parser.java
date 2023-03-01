@@ -44,7 +44,6 @@ public class Parser {
 		while(!isEndOfFile()) {
 			if(previous().getType() == TokenType.SEMICOLON) return;
 			switch(peek().getType()) {
-		        case CLASS:
 		        case FN:
 		        case VAR:
 		        case FOR:

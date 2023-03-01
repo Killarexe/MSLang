@@ -172,11 +172,6 @@ public class Interpreter implements ExpressionVisitor<Object>, StatementVisitor<
 	}
 
 	@Override
-	public Object visitGetExpression(GetExpression expression) {
-		return null;
-	}
-
-	@Override
 	public Object visitLogicalExpression(LogicalExpression expression) {
 		Object left = evaluate(expression.getLeft());
 		if(expression.getOperator().getType() == TokenType.OR) {
@@ -189,21 +184,6 @@ public class Interpreter implements ExpressionVisitor<Object>, StatementVisitor<
 			}
 		}
 		return evaluate(expression.getRight());
-	}
-
-	@Override
-	public Object visitSetExpression(SetExpression expression) {
-		return null;
-	}
-
-	@Override
-	public Object visitSuperExpression(SuperExpression expression) {
-		return null;
-	}
-
-	@Override
-	public Object visitThisExpression(ThisExpression expression) {
-		return null;
 	}
 
 	@Override
@@ -325,12 +305,7 @@ public class Interpreter implements ExpressionVisitor<Object>, StatementVisitor<
 		executeBlock(statement.getStatements(), new Environement(environement));
 		return null;
 	}
-
-	@Override
-	public Void visitClassStatement(ClassStatement statement) {
-		return null;
-	}
-
+	
 	@Override
 	public Void visitExpressionStatement(ExpressionStatement statement) {
 		evaluate(statement.getExpression());

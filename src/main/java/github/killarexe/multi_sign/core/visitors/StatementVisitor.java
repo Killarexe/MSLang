@@ -4,7 +4,6 @@ import github.killarexe.multi_sign.core.statements.*;
 
 public interface StatementVisitor<R> {
     R visitBlockStatement(BlockStatement statement);
-    R visitClassStatement(ClassStatement statement);
     R visitExpressionStatement(ExpressionStatement statement);
     R visitFunctionStatement(FunctionStatement statement);
     R visitIfStatement(IfStatement statement);
